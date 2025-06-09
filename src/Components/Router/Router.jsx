@@ -8,6 +8,8 @@ import AddCourse from "../Layout/AddCourse/AddCourse";
 import Jobs from "../Layout/Jobs/Jobs";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import ErrorPage from "../ErrorPage/ErrorPage";
+import CourseManage from "../Layout/CourseManage/CourseManage";
+import Edit from "../Layout/Edit/Edit";
 
 const router = createBrowserRouter([
     {
@@ -29,6 +31,7 @@ const router = createBrowserRouter([
             },
             {
                 path: 'courses',
+                loader: () => fetch('http://localhost:5000/courses'),
                 element: <PrivateRoute>
                     <Course></Course>
                 </PrivateRoute>
@@ -42,6 +45,18 @@ const router = createBrowserRouter([
             {
                 path: 'jobs',
                 element: <Jobs></Jobs>
+            },
+            {
+                path: 'manage-courses',
+                element: <PrivateRoute>
+                    <CourseManage></CourseManage>
+                </PrivateRoute>
+            },
+            {
+                path: 'edit-course/:id',
+                element: <PrivateRoute>
+                    <Edit></Edit>
+                </PrivateRoute>
             }
         ]
     },
