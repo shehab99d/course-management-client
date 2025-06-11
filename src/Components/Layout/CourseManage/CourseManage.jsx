@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
+import { AuthContext } from '../../AuthProvider/AuthProvider';
 
 const CourseManage = () => {
+  const { user } = useContext(AuthContext)
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deletingCourse, setDeletingCourse] = useState(null);
@@ -10,14 +12,29 @@ const CourseManage = () => {
 
   useEffect(() => {
 
-    fetch('http://localhost:5000/courses')
+    const token = localStorage.getItem('token');
+
+    fetch(`http://localhost:5000/my-courses?email=${user.email}`, {
+      headers: {
+        authorization: `Bearer ${token}`
+      }
+    })
+    fetch(`http://localhost:5000/courses`, {
+      headers: {
+        authorization: `Bearer ${token}`
+      }
+    })
       .then(res => res.json())
       .then(data => {
-        setCourses(data);
+        console.log("👉 Server Response:", data); 
+        console.log("Token sending to server:", token);
+
+        setCourses(data); 
         setLoading(false);
       })
+
       .catch(() => setLoading(false));
-  }, []);
+  }, [user?.email]);
 
   const handleEdit = (id) => {
     navigate(`/edit-course/${id}`);

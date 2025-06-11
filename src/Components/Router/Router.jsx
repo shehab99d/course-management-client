@@ -10,6 +10,7 @@ import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import ErrorPage from "../ErrorPage/ErrorPage";
 import CourseManage from "../Layout/CourseManage/CourseManage";
 import Edit from "../Layout/Edit/Edit";
+import CourseDetails from "../Layout/CourseDetails/CourseDetails";
 
 const router = createBrowserRouter([
     {
@@ -57,6 +58,11 @@ const router = createBrowserRouter([
                 element: <PrivateRoute>
                     <Edit></Edit>
                 </PrivateRoute>
+            },
+            {
+                path: 'course-details/:id',
+                loader: ({ params }) => fetch(`http://localhost:5000/courses/${params.id}`),
+                element: <CourseDetails></CourseDetails>
             }
         ]
     },

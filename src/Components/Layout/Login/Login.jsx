@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash, FaGoogle, FaGithub } from "react-icons/fa";
+import axios from "axios";
 
 const Login = () => {
     const { loginUserWithEmail, signInWithGoogle, signInGithub } = useContext(AuthContext);
@@ -12,22 +13,30 @@ const Login = () => {
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
 
-    const handleLogin = (e) => {
-        e.preventDefault();
-        const form = e.target;
-        const email = form.email.value;
-        const password = form.password.value;
+    const handleLogin = async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const email = form.email.value;
+  const password = form.password.value;
 
-        loginUserWithEmail(email, password)
-            .then(() => {
-                setError("");
-                navigate(from, { replace: true });
-            })
-            .catch((err) => {
-                console.error(err.message);
-                setError("Login failed! Please check your credentials.");
-            });
-    };
+  try {
+    await loginUserWithEmail(email, password);
+    
+    // ✅ ১. JWT token পাও
+    const loggedInUser = { email };
+    const res = await axios.post('http://localhost:5000/jwt', loggedInUser);
+    const token = res.data.token;
+    localStorage.setItem('token', token);
+    console.log("JWT Token stored:", token); // ✅ check this
+
+    // ✅ ২. Navigate করো token set হওয়ার পর
+    navigate(from, { replace: true });
+  } catch (err) {
+    console.error(err.message);
+    setError("Login failed! Please check your credentials.");
+  }
+};
+
 
     const handleGoogleLogin = () => {
         signInWithGoogle()
@@ -51,7 +60,7 @@ const Login = () => {
                 <div className="card-body">
                     <h2 className="text-2xl font-bold text-center mb-4">Login</h2>
                     <form onSubmit={handleLogin} className="space-y-4">
-                      
+
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text font-medium">Email</span>
@@ -65,7 +74,7 @@ const Login = () => {
                             />
                         </div>
 
-                        
+
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text font-medium">Password</span>
@@ -88,10 +97,10 @@ const Login = () => {
                             </div>
                         </div>
 
-                      
+
                         {error && <p className="text-red-500 text-sm">{error}</p>}
 
-                      
+
                         <div className="form-control mt-4">
                             <button className="btn btn-primary w-full">Login</button>
                         </div>

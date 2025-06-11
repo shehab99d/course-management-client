@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import { useLoaderData } from 'react-router-dom';
 
 const Course = () => {
@@ -24,9 +25,11 @@ const Course = () => {
               <p className="text-sm text-gray-500 mb-3">
                 Added: {new Date(course.createdAt).toLocaleDateString()}
               </p>
-              <button className="mt-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-full hover:scale-105 transition">
-                View Details
-              </button>
+              <Link to={`/course-details/${course._id}`}>
+                <button className="mt-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-full hover:scale-105 transition">
+                  View Details
+                </button>
+              </Link>
             </div>
           </div>
         ))}
