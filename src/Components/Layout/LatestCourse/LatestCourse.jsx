@@ -14,7 +14,7 @@ const LatestCourse = () => {
 
   return (
     <section className="my-14 px-4">
-      <h2 className="text-4xl font-bold text-center mb-10 text-gray-800">
+      <h2 className="text-4xl font-bold text-center mb-10 text-gray-800 underline">
         Latest Courses
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
@@ -37,6 +37,9 @@ const LatestCourse = () => {
               </p>
               <p className="text-gray-700 text-sm leading-relaxed">
                 {course.description.slice(0, 100)}...
+              </p>
+              <p className="text-gray-700 text-sm leading-relaxed">
+                {course.createdAt.slice(0, 19).replace('T', ' ')}
               </p>
               <Link to={`/course-details/${course._id}`}>
                 <button className="mt-4 w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-2 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition font-medium">

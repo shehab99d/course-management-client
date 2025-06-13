@@ -1,12 +1,17 @@
 import React, { useState, useContext } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { updateProfile } from "firebase/auth";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 const Register = () => {
   const { createUserWithEmail } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -121,27 +126,47 @@ const Register = () => {
           <label htmlFor="password" className="block font-medium mb-1">
             Password
           </label>
-          <input
-            type="password"
-            name="password"
-            required
-            placeholder="Your password"
-            className="input input-bordered w-full"
-          />
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              required
+              placeholder="Your password"
+              className="input input-bordered w-full pr-10"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+            >
+              {showPassword ? <AiFillEyeInvisible size={22} /> : <AiFillEye size={22} />}
+            </button>
+          </div>
         </div>
 
         <div>
           <label htmlFor="confirmPassword" className="block font-medium mb-1">
             Confirm Password
           </label>
-          <input
-            type="password"
-            name="confirmPassword"
-            required
-            placeholder="Confirm password"
-            className="input input-bordered w-full"
-          />
+          <div className="relative">
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              name="confirmPassword"
+              required
+              placeholder="Confirm password"
+              className="input input-bordered w-full pr-10"
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+            >
+              {showConfirmPassword ? <AiFillEyeInvisible size={22} /> : <AiFillEye size={22} />}
+            </button>
+          </div>
         </div>
+
+
 
         {error && (
           <p className="text-red-600 text-sm mt-1 text-center font-medium">{error}</p>
@@ -154,6 +179,9 @@ const Register = () => {
         >
           {loading ? "Registering..." : "Register"}
         </button>
+        <div className="text-center">
+          <p>Already have an account? <Link className="text-blue-500 underline" to='/login'>Login</Link></p>
+        </div>
       </form>
     </div>
   );

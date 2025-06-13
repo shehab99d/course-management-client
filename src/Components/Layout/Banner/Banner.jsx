@@ -9,17 +9,17 @@ const bannerData = [
   {
     title: "Master New Skills",
     subtitle: "Learn from the best instructors around the world.",
-    image: "/banner1.jpg",
+    image: "https://i.ibb.co/WNxJw7ZF/https-images-ctfassets.jpg",
   },
   {
     title: "Upgrade Your Career",
     subtitle: "Take courses that help you grow professionally.",
-    image: "/banner2.jpg",
+    image: "https://i.ibb.co/gb2Xs71v/career-path-concept-steps-to-grow-business-upgrade-or-development-to-reach-goal-ladder-of-success-pr.jpg",
   },
   {
     title: "Flexible Learning",
     subtitle: "Access our courses anytime, anywhere.",
-    image: "/banner3.jpg",
+    image: "https://i.ibb.co/1tkHWQ99/Hybrid-Learning-04.png",
   },
 ];
 
@@ -66,6 +66,7 @@ const Banner = () => {
               }}
             >
               <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+
                 <motion.div
                   initial={{ opacity: 0, y: 40 }}
                   animate={{ opacity: 1, y: 0 }}

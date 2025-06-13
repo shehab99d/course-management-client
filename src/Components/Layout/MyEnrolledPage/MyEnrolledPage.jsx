@@ -74,7 +74,7 @@ const MyEnrolledPage = () => {
                                 onClick={() => handleDelete(course._id)}
                                 className="btn btn-error mt-3 w-full"
                             >
-                                Delete Enrollment
+                                Remove Enrollment
                             </button>
                         </div>
                     ))}

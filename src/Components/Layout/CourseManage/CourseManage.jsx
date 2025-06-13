@@ -1,39 +1,33 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '../../AuthProvider/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
-import { AuthContext } from '../../AuthProvider/AuthProvider';
 
-const CourseManage = () => {
-  const { user } = useContext(AuthContext)
+const MyCourses = () => {
+  const { user } = useContext(AuthContext);
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deletingCourse, setDeletingCourse] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
+    const token = localStorage.getItem('access-token');
+    if (!user?.email) return;
 
-    const token = localStorage.getItem('token');
-
-    fetch(`http://localhost:5000/my-courses?email=${user.email}`, {
+    fetch(`http://localhost:5000/my-uploaded-courses?email=${user.email}`, {
       headers: {
-        authorization: `Bearer ${token}`
-      }
-    })
-    fetch(`http://localhost:5000/courses`, {
-      headers: {
-        authorization: `Bearer ${token}`
-      }
+        authorization: `Bearer ${token}`,
+      },
     })
       .then(res => res.json())
       .then(data => {
-        console.log("👉 Server Response:", data); 
-        console.log("Token sending to server:", token);
-
-        setCourses(data); 
+        setCourses(data);
         setLoading(false);
       })
-
-      .catch(() => setLoading(false));
+      .catch(err => {
+        console.error('Error fetching user courses:', err);
+        setLoading(false);
+      });
   }, [user?.email]);
 
   const handleEdit = (id) => {
@@ -59,38 +53,36 @@ const CourseManage = () => {
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
       <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center border-b pb-3">
-        📚 Manage Your Courses
+        🎓 My Uploaded Courses
       </h2>
 
       {courses.length === 0 ? (
-        <p className="text-center text-gray-500 text-lg">No courses found. Start by adding some!</p>
+        <p className="text-center text-gray-500 text-lg">You haven’t uploaded any courses yet.</p>
       ) : (
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white border border-gray-200 shadow-md rounded-lg">
             <thead className="bg-gradient-to-r from-purple-600 to-purple-500 text-white">
               <tr>
-                <th className="py-3 px-4 text-left text-sm sm:text-base">Title</th>
-                <th className="py-3 px-4 text-left text-sm sm:text-base">Description</th>
-                <th className="py-3 px-4 text-center text-sm sm:text-base">Actions</th>
+                <th className="py-3 px-4 text-left">Title</th>
+                <th className="py-3 px-4 text-left">Description</th>
+                <th className="py-3 px-4 text-center">Actions</th>
               </tr>
             </thead>
             <tbody>
               {courses.map(course => (
-                <tr key={course._id} className="border-b border-gray-100 hover:bg-gray-50 transition duration-150">
-                  <td className="py-3 px-4 text-sm sm:text-base">{course.title}</td>
-                  <td className="py-3 px-4 text-sm sm:text-base max-w-xs sm:max-w-md truncate">
-                    {course.shortDescription || course.description}
-                  </td>
+                <tr key={course._id} className="border-b hover:bg-gray-50 transition duration-150">
+                  <td className="py-3 px-4">{course.title}</td>
+                  <td className="py-3 px-4 truncate max-w-md">{course.shortDescription || course.description}</td>
                   <td className="py-3 px-4 text-center space-x-2">
                     <button
                       onClick={() => handleEdit(course._id)}
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1 rounded text-sm sm:text-base"
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1 rounded text-sm"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => setDeletingCourse(course)}
-                      className="bg-red-600 hover:bg-red-700 my-2 text-white px-4 py-1 rounded text-sm sm:text-base"
+                      className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded text-sm"
                     >
                       Delete
                     </button>
@@ -102,7 +94,7 @@ const CourseManage = () => {
         </div>
       )}
 
-      {/* Delete confirmation modal */}
+ 
       {deletingCourse && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
           <div className="bg-white rounded-xl p-6 max-w-sm w-full shadow-xl space-y-4">
@@ -128,8 +120,7 @@ const CourseManage = () => {
         </div>
       )}
     </div>
-
   );
 };
 
-export default CourseManage;
+export default MyCourses;
