@@ -1,99 +1,81 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
-import { AuthContext } from '../../AuthProvider/AuthProvider';
-import Swal from 'sweetalert2';
-
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { useLoaderData } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const CourseDetails = () => {
   const course = useLoaderData();
   const { user } = useContext(AuthContext);
   const [isEnrolled, setIsEnrolled] = useState(false);
-  const [seatsLeft, setSeatsLeft] = useState(course.seats);
+  const [seatsLeft, setSeatsLeft] = useState(0);
 
   useEffect(() => {
+    // Get seat info
+    fetch(`http://localhost:5000/courses/${course._id}/seats-left`)
+      .then(res => res.json())
+      .then(data => setSeatsLeft(data.seatsLeft || 0));
+
+    // Check enrollment
     if (user?.email) {
       fetch(`http://localhost:5000/enroll-check?email=${user.email}&courseId=${course._id}`)
         .then(res => res.json())
-        .then(data => {
-          if (data?.enrolled) {
-            setIsEnrolled(true);
-          }
-        });
+        .then(data => setIsEnrolled(data.enrolled));
     }
   }, [user, course._id]);
 
   const handleEnroll = () => {
-    if (!user) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Login Required',
-        text: 'Please login to enroll in this course.',
-        confirmButtonColor: '#6366F1'
-      });
-      return;
-    }
+    if (!user) return Swal.fire("Please login to enroll", "", "warning");
 
-    const enrollmentData = {
-      email: user.email,
-      courseId: course._id,
-      title: course.title,
-      image: course.image,
-      date: new Date(),
-    };
-
-    fetch("http://localhost:5000/enroll", {
+    fetch('http://localhost:5000/enroll', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(enrollmentData),
+      body: JSON.stringify({ email: user.email, courseId: course._id, title: course.title, image: course.image })
     })
-      .then(res => res.json())
-      .then(data => {
-        if (data.insertedId) {
+      .then(res => res.json().then(data => ({ status: res.status, body: data })))
+      .then(({ status, body }) => {
+        if (status === 200 && body.success) {
+          Swal.fire("Enrolled Successfully!", "", "success");
           setIsEnrolled(true);
           setSeatsLeft(prev => prev - 1);
-          Swal.fire({
-            icon: 'success',
-            title: 'Enrolled Successfully!',
-            showConfirmButton: false,
-            timer: 1500
-          });
         } else {
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong!',
-          });
+          Swal.fire("Error", body.message, "error");
         }
       });
   };
 
   return (
-    <div className="max-w-4xl mx-auto my-12 p-6 bg-white shadow-xl rounded-xl">
-      <img src={course.image} alt={course.title} className="w-full h-72 object-cover rounded-lg" />
-      <div className="mt-6 space-y-3">
-        <h2 className="text-3xl font-bold text-gray-800">{course.title}</h2>
-        <p className="text-sm text-indigo-500 font-medium">Duration: {course.duration}</p>
-        <p className="text-gray-600">{course.description}</p>
-        <p className="font-semibold text-gray-700">Available Seats: {seatsLeft}</p>
+    <div className="max-w-4xl mx-auto p-6 sm:p-8 bg-white shadow-xl rounded-3xl mt-10">
+      <div className="grid md:grid-cols-2 gap-8 items-center">
+        <div>
+          <img
+            src={course.image}
+            alt={course.title}
+            className="w-full h-[300px] object-cover rounded-2xl shadow-md"
+          />
+        </div>
+        <div>
+          <h2 className="text-4xl font-bold text-gray-800 mb-3">{course.title}</h2>
+          <p className="text-lg text-gray-600 mb-1"><span className="font-medium text-gray-700">Instructor:</span> {course.instructor}</p>
+          <p className="text-base text-gray-600 mb-2"><span className="font-medium text-gray-700">Description:</span> {course.description}</p>
+          <p className="text-base text-gray-600 mb-4"><span className="font-medium text-gray-700">Seats Left:</span> <strong className="text-blue-600">{seatsLeft}</strong></p>
 
-        <button
-          onClick={handleEnroll}
-          disabled={!user || isEnrolled || seatsLeft <= 0}
-          className={`mt-4 px-6 py-2 rounded-lg text-white font-semibold transition
-            ${!user || isEnrolled || seatsLeft <= 0
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-gradient-to-r from-blue-600 to-indigo-400 hover:from-blue-700 hover:to-indigo-700'
+          <button
+            onClick={handleEnroll}
+            disabled={!user || isEnrolled || seatsLeft <= 0}
+            className={`px-6 py-3 text-lg rounded-xl shadow-md transition duration-300 font-semibold ${
+              !user || isEnrolled || seatsLeft <= 0
+                ? "bg-gray-400 cursor-not-allowed text-white"
+                : "bg-blue-600 hover:bg-blue-700 text-white"
             }`}
-        >
-          {!user
-            ? "Login to Enroll"
-            : isEnrolled
-              ? "Enrolled"
-              : seatsLeft <= 0
-                ? "No Seats Left"
-                : "Enroll"
-          }
-        </button>
+          >
+            {
+              !user ? "Login to Enroll"
+                : isEnrolled ? "Already Enrolled"
+                  : seatsLeft <= 0 ? "No Seats Left"
+                    : "Enroll Now"
+            }
+          </button>
+        </div>
       </div>
     </div>
   );

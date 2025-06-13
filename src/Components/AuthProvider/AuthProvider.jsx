@@ -12,9 +12,8 @@ import {
 import { createContext, useEffect, useState } from "react";
 import app from "../FIrebase/firebaseInit";
 
-
 export const AuthContext = createContext();
-const auth = getAuth(app)
+const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
@@ -24,7 +23,26 @@ const AuthProvider = ({ children }) => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
             setLoading(false);
+
+            // ✅ JWT token fetch
+            if (currentUser) {
+                fetch('http://localhost:5000/jwt', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify({ email: currentUser.email })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        localStorage.setItem('access-token', data.token);
+                    });
+            } else {
+              
+                localStorage.removeItem('access-token');
+            }
         });
+
         return () => unsubscribe();
     }, []);
 
@@ -39,22 +57,21 @@ const AuthProvider = ({ children }) => {
     };
 
     const loginUserWithEmail = async (email, password) => {
-        setLoading(true)
+        setLoading(true);
         try {
-            const Login = await signInWithEmailAndPassword(auth, email, password);
-            return Login;
+            const login = await signInWithEmailAndPassword(auth, email, password);
+            return login;
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
     };
-
 
     const signInWithGoogle = async () => {
         setLoading(true);
         try {
             const provider = new GoogleAuthProvider();
-            const signInGoogle = await signInWithPopup(auth, provider);
-            return signInGoogle
+            const result = await signInWithPopup(auth, provider);
+            return result;
         } finally {
             setLoading(false);
         }
@@ -68,8 +85,8 @@ const AuthProvider = ({ children }) => {
             provider.setCustomParameters({
                 'allow_signup': 'false'
             });
-            const signInUserWithGithub = await signInWithPopup(auth, provider);
-            return signInUserWithGithub
+            const result = await signInWithPopup(auth, provider);
+            return result;
         } finally {
             setLoading(false);
         }
@@ -78,17 +95,11 @@ const AuthProvider = ({ children }) => {
     const logOut = async () => {
         setLoading(true);
         try {
-            const signOutUser = await signOut(auth);
-            return signOutUser;
+            await signOut(auth);
         } finally {
             setLoading(false);
         }
     };
-
-
-    
-
-
 
     const authData = {
         user,
@@ -99,16 +110,14 @@ const AuthProvider = ({ children }) => {
         signInGithub,
         signInWithGoogle,
         loginUserWithEmail,
-        createUserWithEmail,
-
-
-    }
+        createUserWithEmail
+    };
 
     return (
-        <AuthContext value={authData}>
+        <AuthContext.Provider value={authData}>
             {children}
-        </AuthContext>
-    )
-}
+        </AuthContext.Provider>
+    );
+};
 
-export default AuthProvider
+export default AuthProvider;

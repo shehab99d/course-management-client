@@ -40,6 +40,10 @@ const Navbar = () => {
             <NavLink to="/manage-courses" className={navLinkClass}>
               Manage Courses</NavLink>
           </li>
+          <li>
+            <NavLink to="/myEnrolledPage" className={navLinkClass}>
+              My Enrolled Course</NavLink>
+          </li>
         </>
       ) : (
         <li>

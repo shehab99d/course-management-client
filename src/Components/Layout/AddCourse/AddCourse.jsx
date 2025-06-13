@@ -112,6 +112,8 @@ const AddCourse = () => {
             {loading ? 'Adding...' : 'Add Course'}
           </button>
         </div>
+
+        
       </form>
     </div>
   );

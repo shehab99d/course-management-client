@@ -11,6 +11,7 @@ import ErrorPage from "../ErrorPage/ErrorPage";
 import CourseManage from "../Layout/CourseManage/CourseManage";
 import Edit from "../Layout/Edit/Edit";
 import CourseDetails from "../Layout/CourseDetails/CourseDetails";
+import MyEnrolledPage from "../Layout/MyEnrolledPage/MyEnrolledPage";
 
 const router = createBrowserRouter([
     {
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
                 path: 'course-details/:id',
                 loader: ({ params }) => fetch(`http://localhost:5000/courses/${params.id}`),
                 element: <CourseDetails></CourseDetails>
+            },
+            {
+                path: 'myEnrolledPage',
+                element: <MyEnrolledPage></MyEnrolledPage>
             }
         ]
     },
