@@ -5,11 +5,16 @@ import Swal from "sweetalert2";
 
 const CourseDetails = () => {
   const course = useLoaderData();
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [seatsLeft, setSeatsLeft] = useState(0);
+  // const [loadings, setLoadings] = useState(true)
 
   useEffect(() => {
+
+    console.log(user, course._id)
+
+    if (loading || !user || !course._id) return;
     // Get seat info
     fetch(`http://localhost:5000/courses/${course._id}/seats-left`)
       .then(res => res.json())
@@ -21,27 +26,65 @@ const CourseDetails = () => {
         .then(res => res.json())
         .then(data => setIsEnrolled(data.enrolled));
     }
-  }, [user, course._id]);
+  }, [loading, user, course._id]);
 
   const handleEnroll = () => {
-    if (!user) return Swal.fire("Please login to enroll", "", "warning");
+    if (!user) {
+      return Swal.fire("Please login to enroll", "", "warning");
+    }
 
-    fetch('http://localhost:5000/enroll', {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: user.email, courseId: course._id, title: course.title, image: course.image })
-    })
-      .then(res => res.json().then(data => ({ status: res.status, body: data })))
-      .then(({ status, body }) => {
-        if (status === 200 && body.success) {
-          Swal.fire("Enrolled Successfully!", "", "success");
-          setIsEnrolled(true);
-          setSeatsLeft(prev => prev - 1);
-        } else {
-          Swal.fire("Error", body.message, "error");
-        }
+    fetch(`http://localhost:5000/enroll-check?email=${user.email}&courseId=${course._id}`)
+      .then(res => res.json())
+      .then(data => {
+        console.log("Enroll check response:", data); 
+        setIsEnrolled(data.enrolled); 
       });
+
+
+    if (!isEnrolled) {
+      // Enroll
+      fetch('http://localhost:5000/enroll', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: user.email,
+          courseId: course._id,
+          title: course.title,
+          image: course.image
+        })
+      })
+        .then(res => res.json().then(data => ({ status: res.status, body: data })))
+        .then(({ status, body }) => {
+          if (status === 200 && body.success) {
+            Swal.fire("Enrolled Successfully!", "", "success");
+            setIsEnrolled(true);
+            setSeatsLeft(prev => prev - 1);
+          } else {
+            Swal.fire("Error", body.message, "error");
+          }
+        });
+    } else {
+      fetch(`http://localhost:5000/unenroll`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: user.email,
+          courseId: course._id
+        })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            Swal.fire("Unenrolled Successfully!", "", "info");
+            setIsEnrolled(false);
+            setSeatsLeft(prev => prev + 1);
+          } else {
+            Swal.fire("Error", data.message, "error");
+          }
+        });
+    }
   };
+
 
   return (
     <div className="max-w-4xl mx-auto p-6 sm:p-8 bg-white shadow-xl rounded-3xl mt-10">
@@ -61,20 +104,27 @@ const CourseDetails = () => {
 
           <button
             onClick={handleEnroll}
-            disabled={!user || isEnrolled || seatsLeft <= 0}
-            className={`px-6 py-3 text-lg rounded-xl shadow-md transition duration-300 font-semibold ${
-              !user || isEnrolled || seatsLeft <= 0
-                ? "bg-gray-400 cursor-not-allowed text-white"
-                : "bg-blue-600 hover:bg-blue-700 text-white"
-            }`}
+            disabled={!user || (!isEnrolled && seatsLeft <= 0)}
+            className={`px-6 py-3 text-lg rounded-xl shadow-md transition duration-300 font-semibold ${!user
+              ? "bg-gray-400 cursor-not-allowed text-white"
+              : isEnrolled
+                ? "bg-red-500 hover:bg-red-600 text-white"
+                : seatsLeft <= 0
+                  ? "bg-gray-400 cursor-not-allowed text-white"
+                  : "bg-blue-600 hover:bg-blue-700 text-white"
+              }`}
           >
             {
-              !user ? "Login to Enroll"
-                : isEnrolled ? "Already Enrolled"
-                  : seatsLeft <= 0 ? "No Seats Left"
+              !user
+                ? "Login to Enroll"
+                : isEnrolled
+                  ? "Unenroll Now"
+                  : seatsLeft <= 0
+                    ? "No Seats Left"
                     : "Enroll Now"
             }
           </button>
+
         </div>
       </div>
     </div>

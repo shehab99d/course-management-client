@@ -40,7 +40,7 @@ const MostEnrolled = () => {
         <div className="relative mx-10 rounded-2xl bg-gradient-to-br from-purple-700 via-indigo-800 to-blue-900 py-16 px-4">
             <div className="absolute inset-0  bg-opacity-40"></div>
 
-            <div className="relative max-w-6xl mx-auto">
+            <div className="relative lg:max-w-6xl mx-auto">
                 <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-cyan-300 via-indigo-400 to-purple-400 text-transparent bg-clip-text drop-shadow-md">
                     Most Popular Courses
                 </h2>
@@ -94,5 +94,4 @@ const MostEnrolled = () => {
 
     );
 };
-
 export default MostEnrolled;

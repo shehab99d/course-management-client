@@ -11,6 +11,7 @@ import {
 
 import { createContext, useEffect, useState } from "react";
 import app from "../FIrebase/firebaseInit";
+import Swal from "sweetalert2";
 
 export const AuthContext = createContext();
 const auth = getAuth(app);
@@ -24,7 +25,6 @@ const AuthProvider = ({ children }) => {
             setUser(currentUser);
             setLoading(false);
 
-            // ✅ JWT token fetch
             if (currentUser) {
                 fetch('http://localhost:5000/jwt', {
                     method: 'POST',
@@ -38,7 +38,7 @@ const AuthProvider = ({ children }) => {
                         localStorage.setItem('access-token', data.token);
                     });
             } else {
-              
+
                 localStorage.removeItem('access-token');
             }
         });
@@ -79,14 +79,18 @@ const AuthProvider = ({ children }) => {
 
     const signInGithub = async () => {
         setLoading(true);
+        const provider = new GithubAuthProvider();
+        provider.addScope('repo');
+        provider.setCustomParameters({
+            'allow_signup': 'false'
+        });
+
         try {
-            const provider = new GithubAuthProvider();
-            provider.addScope('repo');
-            provider.setCustomParameters({
-                'allow_signup': 'false'
-            });
             const result = await signInWithPopup(auth, provider);
             return result;
+        } catch (error) {
+            console.error("GitHub Sign-In Error:", error);
+            Swal.fire("Login failed", error.message, "error");
         } finally {
             setLoading(false);
         }
