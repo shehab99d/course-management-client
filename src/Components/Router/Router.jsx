@@ -12,6 +12,7 @@ import CourseManage from "../Layout/CourseManage/CourseManage";
 import Edit from "../Layout/Edit/Edit";
 import CourseDetails from "../Layout/CourseDetails/CourseDetails";
 import MyEnrolledPage from "../Layout/MyEnrolledPage/MyEnrolledPage";
+import About from "../Layout/About/About";
 
 const router = createBrowserRouter([
     {
@@ -33,7 +34,7 @@ const router = createBrowserRouter([
             },
             {
                 path: 'courses',
-                loader: () => fetch('http://localhost:5000/courses'),
+                loader: () => fetch('https://course-management-server.vercel.app/courses'),
                 element: <PrivateRoute>
                     <Course></Course>
                 </PrivateRoute>
@@ -62,12 +63,16 @@ const router = createBrowserRouter([
             },
             {
                 path: 'course-details/:id',
-                loader: ({ params }) => fetch(`http://localhost:5000/courses/${params.id}`),
+                loader: ({ params }) => fetch(`https://course-management-server.vercel.app/courses/${params.id}`),
                 element: <CourseDetails></CourseDetails>
             },
             {
                 path: 'myEnrolledPage',
                 element: <MyEnrolledPage></MyEnrolledPage>
+            },
+            {
+                path: 'about',
+                element: <About></About>
             }
         ]
     },

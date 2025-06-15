@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
+import { Helmet } from 'react-helmet-async';
 
 const MyCourses = () => {
   const { user } = useContext(AuthContext);
@@ -14,7 +15,7 @@ const MyCourses = () => {
     const token = localStorage.getItem('access-token');
     if (!user?.email) return;
 
-    fetch(`http://localhost:5000/my-uploaded-courses?email=${user.email}`, {
+    fetch(`https://course-management-server.vercel.app/my-uploaded-courses?email=${user.email}`, {
       headers: {
         authorization: `Bearer ${token}`,
       },
@@ -36,7 +37,7 @@ const MyCourses = () => {
 
   const handleDelete = () => {
     setLoading(true);
-    fetch(`http://localhost:5000/courses/${deletingCourse._id}`, {
+    fetch(`https://course-management-server.vercel.app/courses/${deletingCourse._id}`, {
       method: 'DELETE',
     })
       .then(res => res.json())
@@ -52,6 +53,9 @@ const MyCourses = () => {
 
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
+      <Helmet>
+        <title>Course Details - Course Management</title>
+      </Helmet>
       <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center border-b pb-3">
         🎓 My Uploaded Courses
       </h2>

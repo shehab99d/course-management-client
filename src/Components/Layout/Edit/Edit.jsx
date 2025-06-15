@@ -9,7 +9,7 @@ const Edit = () => {
     const [course, setCourse] = useState(null);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/courses/${id}`)
+        fetch(`https://course-management-server.vercel.app/courses/${id}`)
             .then(res => res.json())
             .then(data => {
                 setCourse(data);
@@ -25,7 +25,7 @@ const Edit = () => {
             shortDescription: form.shortDescription.value
         };
 
-        fetch(`http://localhost:5000/courses/${id}`, {
+        fetch(`https://course-management-server.vercel.app/courses/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"

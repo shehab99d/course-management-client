@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const CourseDetails = () => {
   const course = useLoaderData();
@@ -16,13 +17,13 @@ const CourseDetails = () => {
 
     if (loading || !user || !course._id) return;
     // Get seat info
-    fetch(`http://localhost:5000/courses/${course._id}/seats-left`)
+    fetch(`https://course-management-server.vercel.app/courses/${course._id}/seats-left`)
       .then(res => res.json())
       .then(data => setSeatsLeft(data.seatsLeft || 0));
 
     // Check enrollment
     if (user?.email) {
-      fetch(`http://localhost:5000/enroll-check?email=${user.email}&courseId=${course._id}`)
+      fetch(`https://course-management-server.vercel.app/enroll-check?email=${user.email}&courseId=${course._id}`)
         .then(res => res.json())
         .then(data => setIsEnrolled(data.enrolled));
     }
@@ -33,7 +34,7 @@ const CourseDetails = () => {
       return Swal.fire("Please login to enroll", "", "warning");
     }
 
-    fetch(`http://localhost:5000/enroll-check?email=${user.email}&courseId=${course._id}`)
+    fetch(`https://course-management-server.vercel.app/enroll-check?email=${user.email}&courseId=${course._id}`)
       .then(res => res.json())
       .then(data => {
         console.log("Enroll check response:", data); 
@@ -43,7 +44,7 @@ const CourseDetails = () => {
 
     if (!isEnrolled) {
       // Enroll
-      fetch('http://localhost:5000/enroll', {
+      fetch('https://course-management-server.vercel.app/enroll', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -64,7 +65,7 @@ const CourseDetails = () => {
           }
         });
     } else {
-      fetch(`http://localhost:5000/unenroll`, {
+      fetch(`https://course-management-server.vercel.app/unenroll`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -88,6 +89,9 @@ const CourseDetails = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-6 sm:p-8 bg-white shadow-xl rounded-3xl mt-10">
+      <Helmet>
+        <title>Course Details - Course Management</title>
+      </Helmet>
       <div className="grid md:grid-cols-2 gap-8 items-center">
         <div>
           <img

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router';
 import { useLoaderData } from 'react-router-dom';
 
@@ -7,6 +8,9 @@ const Course = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
+      <Helmet>
+        <title>Course - Course Management</title>
+      </Helmet>
       <h2 className="text-4xl font-bold text-center text-purple-600 mb-12">All Courses</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">

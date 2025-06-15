@@ -26,7 +26,7 @@ const AuthProvider = ({ children }) => {
             setLoading(false);
 
             if (currentUser) {
-                fetch('http://localhost:5000/jwt', {
+                fetch('https://course-management-server.vercel.app/jwt', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'

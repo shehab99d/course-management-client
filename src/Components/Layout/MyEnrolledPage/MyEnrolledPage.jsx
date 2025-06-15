@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const MyEnrolledPage = () => {
     const { user } = useContext(AuthContext);
@@ -8,7 +9,7 @@ const MyEnrolledPage = () => {
 
     useEffect(() => {
         if (user?.email) {
-            fetch(`http://localhost:5000/my-enrollments?email=${user.email}`, {
+            fetch(`https://course-management-server.vercel.app/my-enrollments?email=${user.email}`, {
                 method: "GET",
                 headers: {
                     authorization: `Bearer ${localStorage.getItem('access-token')}`,
@@ -36,7 +37,7 @@ const MyEnrolledPage = () => {
             confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/delete-enrollment/${id}`, {
+                fetch(`https://course-management-server.vercel.app/delete-enrollment/${id}`, {
                     method: "DELETE",
                     headers: {
                         authorization: `Bearer ${localStorage.getItem("access-token")}`,
@@ -55,6 +56,9 @@ const MyEnrolledPage = () => {
 
     return (
         <div className="max-w-4xl mx-auto p-8">
+            <Helmet>
+                <title>My Enrolled Page - Course Management</title>
+            </Helmet>
             <h2 className="text-3xl font-bold mb-6">My Enrolled Courses</h2>
 
             {courses.length === 0 ? (

@@ -1,11 +1,15 @@
-// src/pages/ErrorPage.jsx
+
 import { Link } from "react-router-dom";
 import Lottie from "lottie-react";
-import errorAnimation from '../../assets/Animation - 1749396503129.json'; // You need to download and put a Lottie JSON here
+import errorAnimation from '../../assets/Animation - 1749396503129.json'; 
+import { Helmet } from "react-helmet-async";
 
 const ErrorPage = () => {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center text-center px-4 bg-base-200">
+      <Helmet>
+        <title>404 Error</title>
+      </Helmet>
       <h2 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500 mb-4">
         CourseHub 🚀
       </h2>

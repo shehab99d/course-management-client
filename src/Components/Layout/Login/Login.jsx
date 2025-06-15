@@ -3,6 +3,7 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash, FaGoogle, FaGithub } from "react-icons/fa";
 import axios from "axios";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
   const { loginUserWithEmail, signInWithGoogle, signInGithub } = useContext(AuthContext);
@@ -14,7 +15,7 @@ const Login = () => {
   const from = location.state?.from?.pathname || "/";
 
   const fetchJWT = async (email) => {
-    const res = await axios.post('http://localhost:5000/jwt', { email });
+    const res = await axios.post('https://course-management-server.vercel.app/jwt', { email });
     const token = res.data.token;
     localStorage.setItem('access-token', token);
     console.log("JWT Token stored:", token);
@@ -63,7 +64,11 @@ const Login = () => {
   };
 
   return (
+    
     <div className="flex items-center justify-center min-h-screen bg-base-200 px-4">
+      <Helmet>
+        <title>Login - Course Management</title>
+      </Helmet>
       <div className="card w-full max-w-md shadow-2xl bg-base-100">
         <div className="card-body">
           <h2 className="text-2xl font-bold text-center mb-4">Login</h2>

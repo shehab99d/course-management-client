@@ -44,6 +44,10 @@ const Navbar = () => {
             <NavLink to="/myEnrolledPage" className={navLinkClass}>
               My Enrolled Course</NavLink>
           </li>
+          <li>
+            <NavLink to="/about" className={navLinkClass}>
+              About us</NavLink>
+          </li>
         </>
       ) : (
         <li>
