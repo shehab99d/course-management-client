@@ -1,12 +1,57 @@
-# React + Vite
+# 🎓 Course Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-featured MERN stack web application where users can browse courses, enroll with seat limits, and manage their enrolled courses. Built with React, Tailwind CSS, Firebase, Express.js, MongoDB, and JWT.
 
-Currently, two official plugins are available:
+## 🌐 Live Website
+🔗 [Visit Live Site](https://course-management-a94ea.web.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🧩 Purpose
+The Course Management System helps users explore and enroll in various courses. Admins or users can add and manage their own courses. This project demonstrates skills in authentication (JWT + Firebase), route protection, CRUD operations, MongoDB, dynamic UI, and secure deployments.
 
-## Expanding the ESLint configuration
+## ✨ Key Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- 🔐 **User Authentication** (Firebase + JWT)
+- 🧭 **Role-based Navigation & Route Protection**
+- 🎓 **Add, Edit, Delete & Manage Own Courses**
+- ✅ **Enroll in Courses (Max 3 Per User)**
+- 📉 **Limited Seat Handling with Real-Time Updates**
+- 📌 **Enrolled Courses Page with Remove Option**
+- 📦 **MongoDB Database Integration**
+- 🌈 **Responsive UI with Dark/Light Mode**
+- 🎬 **Banner Slider with framer-motion Animations**
+- 🔍 **Popular & Latest Courses Section**
+- 🚫 **Custom 404 Page**
+- 🔁 **Persistent Login on Refresh (No Redirect Issue)**
+- 🧠 **Dynamic Title Based on Route**
+- 🔔 **Toast Notifications for All Actions**
+- ⏳ **Loading Spinners on Data Fetch**
+- 📃 **Form Validation on Register & Add/Edit Course**
+- 🔗 **Social Login (Google, GitHub)**
+- ⚠️ **.env Security for Firebase and MongoDB Keys**
+
+## 🛠️ Tech Stack
+
+**Frontend:**
+- React.js
+- Tailwind CSS
+- framer-motion
+- react-slick
+- react-icons
+- react-router-dom
+- react-hot-toast
+- shadcn/ui
+
+**Backend:**
+- Node.js
+- Express.js
+- MongoDB
+- JWT (jsonwebtoken)
+- CORS
+- dotenv
+
+**Authentication:**
+- Firebase Authentication (Email/Password, Google, GitHub)
+- JWT Token-Based API Protection
+
+## 📁 Folder Structure
+
