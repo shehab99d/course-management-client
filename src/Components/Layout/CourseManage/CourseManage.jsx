@@ -52,19 +52,21 @@ const MyCourses = () => {
   if (loading) return <LoadingSpinner />;
 
   return (
-    <div className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
+    <div className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8 bg-white dark:bg-darkBg min-h-screen transition-colors duration-500">
       <Helmet>
         <title>Course Details - Course Management</title>
       </Helmet>
-      <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center border-b pb-3">
+      <h2 className="text-3xl font-bold text-yellow-400 mb-6 text-center border-b border-yellow-400 pb-3">
         🎓 My Uploaded Courses
       </h2>
 
       {courses.length === 0 ? (
-        <p className="text-center text-gray-500 text-lg">You haven’t uploaded any courses yet.</p>
+        <p className="text-center text-gray-500 dark:text-gray-400 text-lg transition-colors duration-500">
+          You haven’t uploaded any courses yet.
+        </p>
       ) : (
         <div className="overflow-x-auto">
-          <table className="min-w-full bg-white border border-gray-200 shadow-md rounded-lg">
+          <table className="min-w-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-md rounded-lg transition-colors duration-500">
             <thead className="bg-gradient-to-r from-purple-600 to-purple-500 text-white">
               <tr>
                 <th className="py-3 px-4 text-left">Title</th>
@@ -74,19 +76,24 @@ const MyCourses = () => {
             </thead>
             <tbody>
               {courses.map(course => (
-                <tr key={course._id} className="border-b hover:bg-gray-50 transition duration-150">
-                  <td className="py-3 px-4">{course.title}</td>
-                  <td className="py-3 px-4 truncate max-w-md">{course.shortDescription || course.description}</td>
+                <tr
+                  key={course._id}
+                  className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-150"
+                >
+                  <td className="py-3 px-4 text-gray-900 dark:text-gray-200 transition-colors duration-500">{course.title}</td>
+                  <td className="py-3 px-4 truncate max-w-md text-gray-700 dark:text-gray-300 transition-colors duration-500">
+                    {course.shortDescription || course.description}
+                  </td>
                   <td className="py-3 px-4 text-center space-x-2">
                     <button
                       onClick={() => handleEdit(course._id)}
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1 rounded text-sm"
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1 rounded text-sm transition-colors duration-300"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => setDeletingCourse(course)}
-                      className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded text-sm"
+                      className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded text-sm transition-colors duration-300"
                     >
                       Delete
                     </button>
@@ -98,24 +105,23 @@ const MyCourses = () => {
         </div>
       )}
 
- 
       {deletingCourse && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
-          <div className="bg-white rounded-xl p-6 max-w-sm w-full shadow-xl space-y-4">
-            <h3 className="text-xl font-semibold text-gray-800">Confirm Delete</h3>
-            <p className="text-gray-600">
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-sm w-full shadow-xl space-y-4 transition-colors duration-500">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200">Confirm Delete</h3>
+            <p className="text-gray-600 dark:text-gray-300">
               Are you sure you want to delete <strong>{deletingCourse.title}</strong>?
             </p>
             <div className="flex justify-end space-x-3">
               <button
                 onClick={() => setDeletingCourse(null)}
-                className="px-4 py-2 border border-gray-400 rounded hover:bg-gray-100 transition"
+                className="px-4 py-2 border border-gray-400 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300"
               >
                 Cancel
               </button>
               <button
                 onClick={handleDelete}
-                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
+                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors duration-300"
               >
                 Delete
               </button>

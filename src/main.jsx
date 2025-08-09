@@ -9,14 +9,15 @@ import AuthProvider from './Components/AuthProvider/AuthProvider';
 import { HelmetProvider } from 'react-helmet-async';
 
 
-
-
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <AuthProvider>
-      <HelmetProvider>
-        <RouterProvider router={router} />
-      </HelmetProvider>
-    </AuthProvider>
+    <div className="min-h-screen bg- text-lightText dark:bg-darkBg dark:text-darkText">
+      <AuthProvider>
+        <HelmetProvider>
+          <RouterProvider router={router} />
+        </HelmetProvider>
+      </AuthProvider>
+    </div>
   </StrictMode>,
 )
+

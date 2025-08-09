@@ -47,17 +47,22 @@ const paths = [
 
 const CareerPaths = () => {
   return (
-    <section className="bg-gradient-to-b from-gray-50 to-white py-20 px-6 sm:px-10 lg:px-16">
+    <section
+      className="py-20 px-6 sm:px-10 lg:px-16
+                 
+                 dark:bg-darkBg dark:text-darkText
+                 transition-colors duration-500"
+    >
       <motion.div
         className="text-center mb-12"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
       >
-        <h2 className="text-4xl font-bold text-indigo-700 mb-4">
+        <h2 className="text-4xl font-bold text-indigo-700 dark:text-indigo-400 mb-4">
           Career Paths You Can Take
         </h2>
-        <p className="text-gray-600 max-w-2xl mx-auto">
+        <p className="max-w-2xl mx-auto text-black dark:text-gray-300">
           Our courses prepare you for real-world careers. Explore the top paths our graduates follow, their average salary, and required skills.
         </p>
       </motion.div>
@@ -69,24 +74,28 @@ const CareerPaths = () => {
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: i * 0.15 }}
-            className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl border border-gray-100 transition-all"
+            className="p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all
+                        dark:bg-gray-800 bg-"
           >
             <div className="flex items-center mb-4">
-              <div className="bg-gray-100 p-3 rounded-xl mr-4">{path.icon}</div>
-              <h3 className="text-xl font-semibold text-gray-800">
+              <div className="light:bg-white dark:bg-gray-700 p-3 rounded-xl mr-4">
+                {path.icon}
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
                 {path.title}
               </h3>
             </div>
-            <p className="text-gray-600 mb-3">{path.description}</p>
-            <p className="text-sm font-medium text-gray-700 mb-1">
-              💼 Avg. Salary: <span className="text-green-600">{path.avgSalary}</span>
+            <p className="text-gray-700 dark:text-gray-300 mb-3">{path.description}</p>
+            <p className="text-sm font-medium text-gray-800 dark:text-gray-200 mb-1">
+              💼 Avg. Salary:{" "}
+              <span className="text-green-600 dark:text-green-400">{path.avgSalary}</span>
             </p>
-            <p className="text-sm text-gray-500 mb-2">Skills:</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Skills:</p>
             <ul className="flex flex-wrap gap-2">
               {path.skills.map((skill, idx) => (
                 <li
                   key={idx}
-                  className="bg-indigo-50 text-indigo-600 px-3 py-1 text-sm rounded-full"
+                  className="bg-indigo-50 text-indigo-600 dark:bg-indigo-900 dark:text-indigo-300 px-3 py-1 text-sm rounded-full"
                 >
                   {skill}
                 </li>
