@@ -33,10 +33,10 @@ const Footer = () => {
           <p className="text-sm">Shibpur, Narsingdi, Bangladesh</p>
           <p className="text-sm">Email: support@coursehub.com</p>
           <div className="flex space-x-4 mt-4 text-white">
-            <a href="#"><FaFacebookF /></a>
-            <a href="#"><FaTwitter /></a>
-            <a href="#"><FaInstagram /></a>
-            <a href="#"><FaLinkedinIn /></a>
+            <a href="https://www.facebook.com/Shihab2975"><FaFacebookF /></a>
+            <a href="https://x.com/shehab55755"><FaTwitter /></a>
+            <a href="https://www.instagram.com/code__hub_69/"><FaInstagram /></a>
+            <a href="https://www.linkedin.com/in/shehabul-islam/"><FaLinkedinIn /></a>
           </div>
         </div>
       </div>
