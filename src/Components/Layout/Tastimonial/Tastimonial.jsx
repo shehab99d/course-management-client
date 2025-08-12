@@ -48,7 +48,7 @@ const paths = [
 const CareerPaths = () => {
   return (
     <section
-      className="py-20 px-6 sm:px-10 lg:px-16
+      className="py-20 
                  
                  dark:bg-darkBg dark:text-darkText
                  transition-colors duration-500"

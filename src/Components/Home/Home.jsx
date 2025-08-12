@@ -11,7 +11,7 @@ import StatsSection from '../StatsSection';
 
 const Home = () => {
     return (
-        <div>
+        <div className='lg:mx-10 md:mx-4 mx-3.5'>
             <Helmet>
                 <title>Home - Course Management</title>
             </Helmet>

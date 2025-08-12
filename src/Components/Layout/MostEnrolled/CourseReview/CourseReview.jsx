@@ -47,7 +47,7 @@ const reviews = [
 
 const CourseReview = () => {
     return (
-        <div className="mt-16 px-4 lg:px-10">
+        <div className="mt-16">
             <h3 className="text-4xl font-bold text-center mb-10 text-indigo-700">
                 What Students Say
             </h3>

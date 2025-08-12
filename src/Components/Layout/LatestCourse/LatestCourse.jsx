@@ -72,13 +72,13 @@ const LatestCourse = () => {
   }
 
   return (
-    <section className="my-14 px-4">
+    <section className="my-14">
       <h2 className="text-4xl font-bold text-center mb-10 underline
                      text-yellow-400">
         Latest Courses
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:mx-5  gap-8 mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4   gap-8 mx-auto">
         {latestCourses.map(course => (
           <div
             key={course._id}
