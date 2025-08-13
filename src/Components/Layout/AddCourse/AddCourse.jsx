@@ -67,9 +67,8 @@ const AddCourse = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 
-      bg- dark:bg-darkBg 
-      text-lightText dark:text-darkText 
+    <div className="max-w-3xl mx-auto p-6  
+      text-lightText dark:text-darkText border border-white/20
       shadow-xl rounded-xl mt-10 mb-16 transition-colors duration-300">
       
       <Helmet>
@@ -79,8 +78,8 @@ const AddCourse = () => {
         Add New Course
       </h2>
 
-      <form onSubmit={handleAddCourse} className="space-y-5">
-        <div>
+      <form onSubmit={handleAddCourse} className="space-y-5 ">
+        <div className=''>
           <label className="block mb-1 font-medium">Course Title</label>
           <input
             type="text"
@@ -88,9 +87,7 @@ const AddCourse = () => {
             required
             placeholder="e.g. Web Development Basics"
             className="w-full px-4 py-2 border rounded-md 
-              bg-white dark:bg-gray-800 
-              text-black dark:text-white 
-              border-gray-300 dark:border-gray-600
+              border-gray-300
               focus:outline-none focus:ring-2 focus:ring-purple-400"
           />
         </div>
@@ -103,9 +100,8 @@ const AddCourse = () => {
             rows="4"
             placeholder="Write a short description of the course..."
             className="w-full px-4 py-2 border rounded-md 
-              bg-white dark:bg-gray-800 
-              text-black dark:text-white 
-              border-gray-300 dark:border-gray-600
+             
+              border-gray-300
               focus:outline-none focus:ring-2 focus:ring-purple-400"
           ></textarea>
         </div>
@@ -118,9 +114,7 @@ const AddCourse = () => {
             required
             placeholder="https://example.com/image.jpg"
             className="w-full px-4 py-2 border rounded-md 
-              bg-white dark:bg-gray-800 
-              text-black dark:text-white 
-              border-gray-300 dark:border-gray-600
+              border-gray-300
               focus:outline-none focus:ring-2 focus:ring-purple-400"
           />
         </div>
@@ -132,10 +126,8 @@ const AddCourse = () => {
             name="duration"
             required
             placeholder="e.g. 6 weeks"
-            className="w-full px-4 py-2 border rounded-md 
-              bg-white dark:bg-gray-800 
-              text-black dark:text-white 
-              border-gray-300 dark:border-gray-600
+            className="w-full px-4 py-2 border rounded-md
+              border-gray-300 
               focus:outline-none focus:ring-2 focus:ring-purple-400"
           />
         </div>
@@ -147,9 +139,7 @@ const AddCourse = () => {
             name="seats"
             placeholder="e.g. 10"
             className="w-full px-4 py-2 border rounded-md 
-              bg-white dark:bg-gray-800 
-              text-black dark:text-white 
-              border-gray-300 dark:border-gray-600
+              border-gray-300 
               focus:outline-none focus:ring-2 focus:ring-purple-400"
           />
         </div>

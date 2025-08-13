@@ -37,7 +37,7 @@ const LatestCourse = () => {
     return (
       <section className="my-14 px-4">
         <h2 className="text-4xl font-bold text-center mb-10 underline
-                       text-gray-800 dark:text-gray-200">
+                       ">
           Latest Courses
         </h2>
         <div className="flex justify-center items-center h-48">
@@ -51,7 +51,7 @@ const LatestCourse = () => {
     return (
       <section className="my-14 px-4">
         <h2 className="text-4xl font-bold text-center mb-10 underline
-                       text-yellow-400">
+                       ">
           Latest Courses
         </h2>
         <p className="text-center text-red-500">{error}</p>
@@ -63,10 +63,10 @@ const LatestCourse = () => {
     return (
       <section className="my-14 px-4">
         <h2 className="text-4xl font-bold text-center mb-10 underline
-                       text-yellow-400">
+                       ">
           Latest Courses
         </h2>
-        <p className="text-center text-gray-600 dark:text-gray-400">No courses available.</p>
+        <p className="text-center">No courses available.</p>
       </section>
     );
   }
@@ -74,25 +74,25 @@ const LatestCourse = () => {
   return (
     <section className="my-14">
       <h2 className="text-4xl font-bold text-center mb-10 underline
-                     text-yellow-400">
+                     ">
         Latest Courses
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4   gap-8 mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mx-auto">
         {latestCourses.map(course => (
           <div
             key={course._id}
-            className="rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300
-                       bg-white dark:bg-gray-800"
+            className="rounded-2xl border border-white/20 overflow-hidden shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300
+                       0"
           >
             <img
               src={course.image}
               alt={course.title}
               className="h-48 w-full object-cover"
             />
-            <div className="p-5 space-y-2 text-gray-900 dark:text-gray-100">
+            <div className="p-5 space-y-2 ">
               <h3 className="text-xl font-semibold">{course.title}</h3>
-              <p className="text-sm text-indigo-600 dark:text-indigo-400 font-medium">{course.duration}</p>
+              <p className="text-sm  font-medium">{course.duration}</p>
               <p className="text-sm leading-relaxed">
                 {course.description?.slice(0, 100) || "No description"}...
               </p>

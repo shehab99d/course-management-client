@@ -52,7 +52,7 @@ const MyCourses = () => {
   if (loading) return <LoadingSpinner />;
 
   return (
-    <div className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8 bg-white dark:bg-darkBg min-h-screen transition-colors duration-500">
+    <div className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8 d min-h-screen transition-colors duration-500">
       <Helmet>
         <title>Course Details - Course Management</title>
       </Helmet>
@@ -61,13 +61,13 @@ const MyCourses = () => {
       </h2>
 
       {courses.length === 0 ? (
-        <p className="text-center text-gray-500 dark:text-gray-400 text-lg transition-colors duration-500">
+        <p className="text-center text-lg transition-colors duration-500">
           You haven’t uploaded any courses yet.
         </p>
       ) : (
         <div className="overflow-x-auto">
-          <table className="min-w-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-md rounded-lg transition-colors duration-500">
-            <thead className="bg-gradient-to-r from-purple-600 to-purple-500 text-white">
+          <table className="min-w-full border border-gray-200 shadow-md rounded-lg transition-colors duration-500">
+            <thead className="bg-gradient-to-r from-purple-600 to-purple-500">
               <tr>
                 <th className="py-3 px-4 text-left">Title</th>
                 <th className="py-3 px-4 text-left">Description</th>
@@ -78,10 +78,10 @@ const MyCourses = () => {
               {courses.map(course => (
                 <tr
                   key={course._id}
-                  className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-150"
+                  className="border-b border-gray-200 hover:bg-gray-50 transition-colors duration-150"
                 >
-                  <td className="py-3 px-4 text-gray-900 dark:text-gray-200 transition-colors duration-500">{course.title}</td>
-                  <td className="py-3 px-4 truncate max-w-md text-gray-700 dark:text-gray-300 transition-colors duration-500">
+                  <td className="py-3 px-4 transition-colors duration-500">{course.title}</td>
+                  <td className="py-3 px-4 truncate max-w-md transition-colors duration-500">
                     {course.shortDescription || course.description}
                   </td>
                   <td className="py-3 px-4 text-center space-x-2">

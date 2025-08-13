@@ -99,24 +99,22 @@ const MostEnrolled = () => {
           <motion.div
             key={course._id}
             variants={cardVariants}
-            className="rounded-2xl overflow-hidden shadow-xl
-              bg-white dark:bg-gray-800
-              hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
+            className="rounded-2xl overflow-hidden shadow-xl border border-white/20 hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
           >
             <img
               src={course.image}
               alt={course.title}
               className="h-48 w-full object-cover"
             />
-            <div className="p-5 space-y-2 text-gray-900 dark:text-gray-100">
+            <div className="p-5 space-y-2">
               <h3 className="text-xl font-bold">{course.title}</h3>
-              <p className="text-sm text-indigo-600 dark:text-indigo-400 font-medium">
+              <p className="text-sm font-medium">
                 Instructor: {course.instructor || "N/A"}
               </p>
-              <p className="text-sm text-gray-700 dark:text-gray-300">
+              <p className="text-sm">
                 {formatDate(course.createdAt)}
               </p>
-              <p className="text-sm text-indigo-700 font-semibold">
+              <p className="text-sm font-semibold">
                 Enrolled: <span className="text-pink-600">{course.enrollCount}</span> students
               </p>
             </div>

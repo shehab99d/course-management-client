@@ -68,12 +68,12 @@ const Edit = () => {
     }
 
     return (
-        <div className="max-w-2xl mx-auto p-8 bg-white shadow-lg rounded-2xl mt-10">
-            <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center border-b pb-4">✏️ Edit Course</h2>
+        <div className="max-w-2xl mx-auto p-8 shadow-lg rounded-2xl mt-10">
+            <h2 className="text-3xl font-bold mb-6 text-center border-b pb-4">✏️ Edit Course</h2>
 
             <form onSubmit={handleUpdate} className="space-y-6">
                 <div>
-                    <label htmlFor="title" className="block text-gray-700 font-medium mb-1">Course Title</label>
+                    <label htmlFor="title" className="block  font-medium mb-1">Course Title</label>
                     <input
                         type="text"
                         name="title"
@@ -85,7 +85,7 @@ const Edit = () => {
                 </div>
 
                 <div>
-                    <label htmlFor="shortDescription" className="block text-gray-700 font-medium mb-1">Short Description</label>
+                    <label htmlFor="shortDescription" className="block  font-medium mb-1">Short Description</label>
                     <input
                         type="text"
                         name="shortDescription"
@@ -96,7 +96,7 @@ const Edit = () => {
                 </div>
 
                 <div>
-                    <label htmlFor="description" className="block text-gray-700 font-medium mb-1">Full Description</label>
+                    <label htmlFor="description" className="block font-medium mb-1">Full Description</label>
                     <textarea
                         name="description"
                         defaultValue={course.description}

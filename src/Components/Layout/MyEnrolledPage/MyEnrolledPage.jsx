@@ -62,18 +62,18 @@ const MyEnrolledPage = () => {
             <h2 className="text-3xl font-bold mb-6">My Enrolled Courses</h2>
 
             {courses.length === 0 ? (
-                <p className="text-gray-500">You have not enrolled in any courses yet.</p>
+                <p className="">You have not enrolled in any courses yet.</p>
             ) : (
                 <div className="grid md:grid-cols-2 gap-6">
                     {courses.map((course, idx) => (
-                        <div key={idx} className="bg-white shadow-lg rounded-xl p-4">
+                        <div key={idx} className=" shadow-lg rounded-xl p-4 border border-white/20">
                             <img
                                 src={course.image}
                                 alt={course.title}
                                 className="w-full h-40 object-cover rounded-lg mb-3"
                             />
                             <h3 className="text-xl font-semibold">{course.title}</h3>
-                            <p className="text-sm text-gray-600">Instructor: {course.instructor}</p>
+                            <p className="text-sm ">Instructor: {course.instructor}</p>
                             <button
                                 onClick={() => handleDelete(course._id)}
                                 className="btn btn-error mt-3 w-full"

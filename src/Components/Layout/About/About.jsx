@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet-async';
 
 const About = () => {
   return (
-    <div className="bg-white dark:bg-gray-900 text-gray-800 dark:text-white px-6 md:px-16 py-12 space-y-16">
+    <div className="px-6 md:px-16 py-12 space-y-16">
         <Helmet>
             <title>About - Course Management</title>
         </Helmet>
@@ -41,7 +41,7 @@ const About = () => {
       {/* Why Choose Us */}
       <section className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
         <motion.div 
-          className="p-6 rounded-xl shadow-md bg-gray-50 dark:bg-gray-800"
+          className="p-6 rounded-xl shadow-md"
           whileHover={{ scale: 1.03 }}
         >
           <h3 className="text-2xl font-semibold mb-2">Why Choose Us?</h3>
@@ -56,7 +56,7 @@ const About = () => {
 
         {/* Platform Stats */}
         <motion.div 
-          className="p-6 rounded-xl shadow-md bg-gray-50 dark:bg-gray-800 space-y-4"
+          className="p-6 rounded-xl shadow-md space-y-4"
           whileHover={{ scale: 1.03 }}
         >
           <h3 className="text-2xl font-semibold mb-4">Our Impact</h3>
